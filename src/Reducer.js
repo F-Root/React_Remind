@@ -1,20 +1,53 @@
-import { useState } from 'react';
+import { useState, useReducer } from 'react';
+
+// function App() {
+//   const [count, setCount] = useState(0);
+//   return (
+//     <>
+//       <button
+//         onClick={() => {
+//           // setCount(count + 1);
+//           // setCount(count + 1);
+//           // setCount(count + 1);
+//           setCount((cur) => cur + 1);
+//           setCount((cur) => cur + 1);
+//           setCount((cur) => cur + 1);
+//         }}
+//       >
+//         +
+//       </button>
+//       <p>{count}</p>
+//     </>
+//   );
+// }
 
 function App() {
-  const [count, setCount] = useState(0);
+  const countReducer = (oldCount, action) => {
+    console.log(oldCount, action);
+    if (action === 'up') {
+      return oldCount + 1;
+    } else if (action === 'down') {
+      return oldCount - 1;
+    }
+  };
+  const countInitValue = 0;
+  const [count, countDispatch] = useReducer(countReducer, countInitValue);
+
   return (
     <>
       <button
         onClick={() => {
-          // setCount(count + 1);
-          // setCount(count + 1);
-          // setCount(count + 1);
-          setCount((cur) => cur + 1);
-          setCount((cur) => cur + 1);
-          setCount((cur) => cur + 1);
+          countDispatch('up');
         }}
       >
         +
+      </button>
+      <button
+        onClick={() => {
+          countDispatch('down');
+        }}
+      >
+        -
       </button>
       <p>{count}</p>
     </>
